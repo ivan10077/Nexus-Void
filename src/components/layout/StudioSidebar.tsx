@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useSoundscapeStore } from '../../stores/useSoundscapeStore';
 import { engine } from '../../audio/AudioEngine';
 import { api } from '../../services/api';
+import { PresetSelector } from '../ui/PresetSelector';
+import { WaveformVisualizer } from '../ui/WaveformVisualizer';
+import { TemplateLoader } from '../ui/TemplateLoader';
 
 export function StudioSidebar() {
   const currentSoundscape = useSoundscapeStore(s => s.currentSoundscape);
@@ -82,6 +85,8 @@ export function StudioSidebar() {
         </div>
       </div>
 
+      <TemplateLoader />
+
       <div className="mb-6">
         <button
           onClick={handleSave}
@@ -92,6 +97,10 @@ export function StudioSidebar() {
         </button>
       </div>
 
+      <div className="mb-6">
+        <WaveformVisualizer />
+      </div>
+
       <div className="flex-1 overflow-y-auto">
         {selectedNode ? (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
@@ -99,7 +108,7 @@ export function StudioSidebar() {
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-medium">{selectedNode.name || selectedNode.type}</h3>
                 {selectedNode.type !== 'master' && (
-                  <button 
+                  <button
                     onClick={() => removeNode(selectedNode.id)}
                     className="text-white/40 hover:text-red-400 transition-colors"
                   >
@@ -109,6 +118,8 @@ export function StudioSidebar() {
               </div>
               <p className="text-xs text-white/50 font-mono">{selectedNode.id.slice(0,8)}</p>
             </div>
+
+            <PresetSelector />
 
             <div className="space-y-4 bg-white/5 p-4 rounded-xl border border-white/5">
               {selectedNode.type === 'synth' && (

@@ -9,6 +9,9 @@ export function StudioRender() {
   const currentSoundscape = useSoundscapeStore(s => s.currentSoundscape);
   const selectedNodeId = useSoundscapeStore(s => s.selectedNodeId);
   const connectNodes = useSoundscapeStore(s => s.connectNodes);
+  const selectNode = useSoundscapeStore(s => s.selectNode);
+  const removeNode = useSoundscapeStore(s => s.removeNode);
+  const addNode = useSoundscapeStore(s => s.addNode);
 
   const [connectingFrom, setConnectingFrom] = useState<string | null>(null);
 
@@ -18,7 +21,7 @@ export function StudioRender() {
     }
   }, [currentSoundscape, initializeNew]);
 
-  // Handle connection logic
+  // Handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'c' && selectedNodeId) {
@@ -34,11 +37,29 @@ export function StudioRender() {
       if (e.key === 'Escape') {
         setConnectingFrom(null);
       }
+      // Delete node
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedNodeId && selectedNodeId !== 'master-out') {
+        e.preventDefault();
+        removeNode(selectedNodeId);
+        selectNode(null);
+      }
+      // Duplicate node
+      if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selectedNodeId && selectedNodeId !== 'master-out') {
+        e.preventDefault();
+        const selectedNode = currentSoundscape?.nodes.find(n => n.id === selectedNodeId);
+        if (selectedNode) {
+          addNode(selectedNode.type, [
+            selectedNode.position[0] + 1,
+            selectedNode.position[1] + 1,
+            selectedNode.position[2]
+          ]);
+        }
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedNodeId, connectingFrom, connectNodes]);
+  }, [selectedNodeId, connectingFrom, connectNodes, removeNode, selectNode, addNode, currentSoundscape]);
 
   return (
     <div className="w-screen h-screen flex overflow-hidden">

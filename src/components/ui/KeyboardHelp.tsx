@@ -6,6 +6,8 @@ export function KeyboardHelp() {
 
   const shortcuts = [
     { key: 'C', description: 'Connect: Select a node, press C, then select target' },
+    { key: 'DELETE', description: 'Delete selected node (not Master Output)' },
+    { key: 'CTRL+D / CMD+D', description: 'Duplicate selected node' },
     { key: 'ESC', description: 'Cancel any operation' },
     { key: 'SCROLL', description: 'Zoom in/out' },
     { key: 'RIGHT CLICK + DRAG', description: 'Rotate camera' },
