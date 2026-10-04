@@ -44,7 +44,7 @@ export function StudioSidebar() {
   };
 
   return (
-    <div className="w-80 h-full bg-black/60 backdrop-blur-xl border-l border-white/10 p-6 flex flex-col text-white z-10">
+    <div className="w-80 h-full bg-black/60 backdrop-blur-xl border-l border-white/10 p-6 flex flex-col text-white z-50 pt-20">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-xl font-bold tracking-tight">Studio</h2>
         <button 

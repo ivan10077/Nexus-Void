@@ -10,7 +10,7 @@ export function Navigation() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-black/40 border-b border-white/10"
+      className="fixed top-0 left-0 right-0 z-30 backdrop-blur-xl bg-black/40 border-b border-white/10"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
     >
